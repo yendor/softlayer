@@ -1,5 +1,10 @@
 <?php
 
+/**
+* Get a list of all the public ips per server for each server in an account.
+* This does not include portable ips which are instead routed to a vlan rather than a server
+**/
+
 require_once(dirname(__FILE__).'/common.php');
 
 $ips = array();

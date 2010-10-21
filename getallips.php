@@ -1,5 +1,10 @@
 <?php
 
+/**
+* Get a list of all the public ips in an account.
+* The list may contain duplicates
+**/
+
 require_once dirname(__FILE__).'/common.php';
 
 $client = SoftLayer_SoapClient::getClient('SoftLayer_Account', null, Config::USERNAME, Config::KEY);
