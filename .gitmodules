@@ -1,0 +1,6 @@
+[submodule "softlayer-api-php-client"]
+	path = softlayer-api-php-client
+	url = git://github.com/softlayer/softlayer-api-php-client.git
+[submodule "ipenumerator"]
+	path = ipenumerator
+	url = git://github.com/yendor/ipenumerator.git
