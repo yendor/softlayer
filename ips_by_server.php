@@ -7,8 +7,6 @@
 
 require_once(dirname(__FILE__).'/common.php');
 
-$ips = array();
-
 $client = SoftLayer_SoapClient::getClient('SoftLayer_Account', null, Config::USERNAME, Config::KEY);
 
 $objectMask = new SoftLayer_ObjectMask();
@@ -34,6 +32,27 @@ try {
 					echo $ipaddr->ipAddress."\n";
 				}
 			}
+		}
+	}
+
+	banner("portable ips");
+
+	$publicNetworks = $client->getPublicSubnets();
+
+	foreach ($publicNetworks as $network) {
+		$cidr = $network->networkIdentifier.'/'.$network->cidr;
+		$ipEnum = new IpEnumerator($cidr);
+		if ($network->subnetType != 'SECONDARY_ON_VLAN') {
+			continue;
+		}
+
+		foreach ($ipEnum as $ip) {
+			if (in_array($network->subnetType, array('PRIMARY', 'ADDITIONAL_PRIMARY', 'SECONDARY_ON_VLAN'))) {
+				if ($ip == $network->networkIdentifier || $ip == $network->broadcastAddress || $ip == $network->gateway) {
+					continue;
+				}
+			}
+			echo "$ip\n";
 		}
 	}
 
